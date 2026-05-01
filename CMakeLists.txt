@@ -12,5 +12,6 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-add_executable(matmul src/main.cpp)
+add_executable(matmul src/main.cpp src/matrix.cpp)
+target_include_directories(matmul PRIVATE include)
 target_compile_options(matmul PRIVATE -march=native -Wall -Wextra)
