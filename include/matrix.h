@@ -9,6 +9,7 @@ class Matrix
   public:
     //constructor
     Matrix(int rows, int cols);
+    Matrix(int rows, int cols, std::vector<float> data);
 
     //factory methods
     static Matrix random(int rows, int cols, unsigned int seed = std::random_device{}());
@@ -19,6 +20,7 @@ class Matrix
 
     //public methods
     void print() const;
+
   private:
     int rows_ = 0;
     int cols_ = 0;

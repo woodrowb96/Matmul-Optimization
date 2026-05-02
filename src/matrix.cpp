@@ -4,8 +4,9 @@
 #include <cstdio>
 #include <random>
 #include <cassert>
+#include <utility>
 
-/***************************** PUBLIC *******************************/
+/******************************** PUBLIC ***********************************/
 
 //CONSTRUCTOR
 Matrix::Matrix(int rows, int cols)
@@ -14,6 +15,16 @@ Matrix::Matrix(int rows, int cols)
     cols_(cols),
     data_(rows * cols)
 {}
+
+Matrix::Matrix(int rows, int cols, std::vector<float> data)
+  :
+    rows_(rows),
+    cols_(cols),
+    data_(std::move(data))
+{
+  assert(static_cast<size_t>(rows * cols) == data_.size());
+}
+
 
 //FACTORY METHODS
 Matrix Matrix::random(int rows, int cols, unsigned int seed)
@@ -28,8 +39,8 @@ Matrix Matrix::random(int rows, int cols, unsigned int seed)
   return rand_matrix;
 }
 
-//OPERATOR OVERLOADS
 
+//OPERATOR OVERLOADS
 float& Matrix::operator()(int i, int j)
 {
   assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
@@ -41,6 +52,7 @@ float Matrix::operator()(int i, int j) const
   assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
   return data_[(i * cols_) + j];
 }
+
 
 //PUBLIC METHODS
 void Matrix::print() const
