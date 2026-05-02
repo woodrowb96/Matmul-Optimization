@@ -30,7 +30,7 @@ Matrix::Matrix(int rows, int cols, std::vector<float> data)
 Matrix Matrix::random(int rows, int cols, unsigned int seed)
 {
   std::mt19937 gen(seed);
-  std::uniform_real_distribution<float> dist(-1.0, 1.0);
+  std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
 
   Matrix rand_matrix(rows, cols);
   for(int i = 0; i < (rows * cols); i++) {
@@ -67,5 +67,5 @@ void Matrix::print() const
 
 void Matrix::zero()
 {
-  std::fill(data_.begin(), data_.end(), 0.0);
+  std::fill(data_.begin(), data_.end(), 0.0f);
 }
