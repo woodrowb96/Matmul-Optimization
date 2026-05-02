@@ -1,37 +1,23 @@
 #include "matrix.h"
+#include "matmul_naive.h"
 
 #include <iostream>
 
 int main()
 {
-  Matrix a (5, 3);
-  Matrix b (10, 4);
-  Matrix c = Matrix::random(7, 2);
-  Matrix d = Matrix::random(3, 3, 42);
-  Matrix e (3, 3, {21.0f, -3.0f, 0.3f, 0.3f, 66.0f, 212.0f, 9.0f, 5.0f, 6.0f});
-  std::cout << "A:\n";
-  a.print();
-  std::cout << "B:\n";
-  b.print();
-  std::cout << "C:\n";
+  Matrix a (2, 2, {1.0f, 2.0f, 1.0f, 2.0f});
+  Matrix b (2, 4, {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f});
+  Matrix c (2, 4);
+
+  matmul_naive(a, b, c); //expect ( 3 3 3 3, 3 3 3 3)
   c.print();
-  std::cout << "D:\n";
-  d.print();
-  std::cout << "e:\n";
-  e.print();
+  std::cout << "\n";
 
-  a(1,1) = 5.0f;
-  a(0,0) = 3.3f;
-  std::cout << "A:\n";
-  a.print();
-  std::cout << "A[1,2]: " << a(1,2) << "\n";
+  Matrix d (3, 2, {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f});
+  Matrix e (2, 4, {2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 5.0f, 5.0f});
+  Matrix f (3, 4);
 
-  std::cout << "C.rows(): " << c.rows() << "\n";
-  std::cout << "C.cols(): " << c.cols() << "\n";
-
-  d.zero();
-  std::cout << "D:\n";
-  d.print();
-
+  matmul_naive(d, e, f); //expect ( 10 10 13 13, 22 22 29 29, 34 34 45 45)
+  f.print();
   return 0;
 }

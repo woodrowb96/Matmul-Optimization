@@ -1,8 +1,8 @@
-#ifndef MATMUL_NAIVE
-#define MATMUL_NAIVE
+#ifndef MATMUL_NAIVE_H
+#define MATMUL_NAIVE_H
 
 #include "matrix.h"
 
-void matmul_naive(const Matrix& a, const Matrix& b, Matrix& c);
+void matmul_naive(const Matrix& A, const Matrix& B, Matrix& C);
 
 #endif
