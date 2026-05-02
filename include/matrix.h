@@ -7,11 +7,17 @@
 class Matrix
 {
   public:
+    //constructor
     Matrix(int rows, int cols);
-    Matrix(int rows, int cols, std::vector<float> data);
 
-    // static Matrix random(int rows, int cols, unsigned int seed = std::random_device{}());
+    //factory methods
+    static Matrix random(int rows, int cols, unsigned int seed = std::random_device{}());
 
+    //operator overloads
+    float& operator()(int i, int j);
+    float  operator()(int i, int j) const;
+
+    //public methods
     void print() const;
   private:
     int rows_ = 0;
