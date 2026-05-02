@@ -15,6 +15,7 @@ endif()
 add_executable(matmul
   src/main.cpp
   src/matrix.cpp
-  src/matmul_naive.cpp)
+  src/matmul_naive.cpp
+  src/benchmark.cpp)
 target_include_directories(matmul PRIVATE include)
 target_compile_options(matmul PRIVATE -march=native -Wall -Wextra)
