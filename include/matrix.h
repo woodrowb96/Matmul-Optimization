@@ -24,6 +24,7 @@ class Matrix
 
     //public methods
     void print() const;
+    void zero();
 
   private:
     int rows_ = 0;

@@ -28,5 +28,10 @@ int main()
 
   std::cout << "C.rows(): " << c.rows() << "\n";
   std::cout << "C.cols(): " << c.cols() << "\n";
+
+  d.zero();
+  std::cout << "D:\n";
+  d.print();
+
   return 0;
 }

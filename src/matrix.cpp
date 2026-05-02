@@ -64,3 +64,8 @@ void Matrix::print() const
     std::fprintf(stdout, "\n");
   }
 }
+
+void Matrix::zero()
+{
+  std::fill(data_.begin(), data_.end(), 0.0);
+}
