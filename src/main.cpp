@@ -25,5 +25,8 @@ int main()
   std::cout << "A:\n";
   a.print();
   std::cout << "A[1,2]: " << a(1,2) << "\n";
+
+  std::cout << "C.rows(): " << c.rows() << "\n";
+  std::cout << "C.cols(): " << c.cols() << "\n";
   return 0;
 }

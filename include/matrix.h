@@ -18,6 +18,10 @@ class Matrix
     float& operator()(int i, int j);
     float  operator()(int i, int j) const;
 
+    //getters
+    int rows() const { return rows_; };
+    int cols() const { return cols_; };
+
     //public methods
     void print() const;
 
