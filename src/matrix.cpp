@@ -41,17 +41,17 @@ Matrix Matrix::random(int rows, int cols, unsigned int seed)
 
 
 //OPERATOR OVERLOADS
-float& Matrix::operator()(int i, int j)
-{
-  assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
-  return data_[(i * cols_) + j];
-}
-
-float Matrix::operator()(int i, int j) const
-{
-  assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
-  return data_[(i * cols_) + j];
-}
+// float& Matrix::operator()(int i, int j)
+// {
+//   assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
+//   return data_[(i * cols_) + j];
+// }
+//
+// float Matrix::operator()(int i, int j) const
+// {
+//   assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
+//   return data_[(i * cols_) + j];
+// }
 
 
 //PUBLIC METHODS
