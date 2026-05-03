@@ -11,9 +11,11 @@ void matmul_tiled_cpu(const Matrix& A, const Matrix& B, Matrix& C,
 
         for(int i = ii; i < std::min(ii + tile_i, A.rows()); i++) {
           for(int j = jj; j < std::min(jj + tile_j, B.cols()); j++) {
+            float dot_prod = C(i,j);
             for(int k = kk; k < std::min(kk + tile_k, A.cols()); k++) {
-              C(i,j) += A(i,k) * B(k,j);
+              dot_prod += A(i,k) * B(k,j);
             }
+            C(i,j) = dot_prod;
           }
         }
 
