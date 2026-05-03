@@ -3,6 +3,9 @@
 
 #include "matrix.h"
 
-double time_matmul_naive(const Matrix& A, const Matrix& B, Matrix& C, int runs);
+#include <functional>
+
+double time_matmul(std::function<void(const Matrix&, const Matrix&, Matrix&)> matmul,
+                    const Matrix& A, const Matrix& B, Matrix& C, int runs);
 
 #endif
