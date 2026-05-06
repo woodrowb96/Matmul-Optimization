@@ -39,6 +39,6 @@ TimingStats time_matmul(std::function<void(const Matrix&, const Matrix&, Matrix&
 }
 
 void print_times(const std::string& msg, const TimingStats& stats) {
-  std::fprintf(stdout, "%-40s Min: %9.4gms Max: %9.4gms Avg: %9.4gms\n",
+  std::fprintf(stdout, "%-40s Min: %9.4fms Max: %9.4fms Avg: %9.4fms\n",
                msg.c_str(), stats.min, stats.max, stats.avg);
 }

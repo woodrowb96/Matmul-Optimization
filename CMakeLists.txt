@@ -17,6 +17,7 @@ add_executable(matmul
   src/matrix.cpp
   src/matmul_naive.cpp
   src/benchmark.cpp
-  src/matmul_tiled_cpu.cpp)
+  src/matmul_tiled_cpu.cpp
+  src/matmul_tiled_threaded.cpp)
 target_include_directories(matmul PRIVATE include)
 target_compile_options(matmul PRIVATE -march=native -Wall -Wextra)
