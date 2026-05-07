@@ -15,6 +15,7 @@ class Matrix
 
     //factory methods
     static Matrix random(int rows, int cols, unsigned int seed = std::random_device{}());
+    static Matrix identity(int n);
 
     //operator overloads
     float& operator()(int i, int j) {

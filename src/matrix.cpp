@@ -11,11 +11,15 @@
 
 //CONSTRUCTOR
 Matrix::Matrix(int rows, int cols)
-  :
-    rows_(rows),
-    cols_(cols),
-    data_(rows * cols)
-{}
+{
+  if(rows <= 0 || cols <= 0) {
+    throw std::invalid_argument("Matrix(): invalid matrix size");
+  }
+
+  rows_ = rows;
+  cols_ = cols;
+  data_.resize(rows * cols);
+}
 
 Matrix::Matrix(std::initializer_list<std::initializer_list<float>> rows)
 {
@@ -52,6 +56,15 @@ Matrix Matrix::random(int rows, int cols, unsigned int seed)
       rand_matrix.data_[i] = dist(gen);
   }
   return rand_matrix;
+}
+
+Matrix Matrix::identity(int n)
+{
+  Matrix identity(n, n);
+  for(int i = 0; i < n; i++) {
+    identity(i,i) = 1.0f;
+  }
+  return identity;
 }
 
 //PUBLIC METHODS
