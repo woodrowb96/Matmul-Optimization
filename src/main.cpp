@@ -9,12 +9,11 @@ int main()
 {
   Matrix a = Matrix::identity(5);
   a.print();
-  
-  Matrix b = Matrix::identity(1);
+
+  Matrix b = Matrix::zeros(5,3);
   b.print();
   
-  Matrix c = Matrix::identity(11);
-  c.print();
+  
   // int tile_i = 32, tile_j = 32, tile_k = 32;
   // auto tiled_call = [tile_i, tile_j, tile_k](const Matrix& A, const Matrix& B, Matrix& C) {
   //   matmul_tiled_cpu(A, B, C, tile_i, tile_j, tile_k);

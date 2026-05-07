@@ -10,12 +10,12 @@ class Matrix
 {
   public:
     //constructor
-    Matrix(int rows, int cols);
     Matrix(std::initializer_list<std::initializer_list<float>> rows);
 
     //factory methods
     static Matrix random(int rows, int cols, unsigned int seed = std::random_device{}());
     static Matrix identity(int n);
+    static Matrix zeros(int rows, int cols);
 
     //operator overloads
     float& operator()(int i, int j) {
@@ -33,9 +33,18 @@ class Matrix
 
     //public methods
     void print() const;
-    void zero();
+    void zero();          //zero (so make all entries 0) an already existing matrix
 
   private:
+    //private constructor
+    //  This constructor will make a matrix of size rowsXcols that is all zero.
+    //  I am making this private, so the Matrix::zero() factory to get a zero matrix.
+    //  This way users use the public constructor to make a matrix filled with custom data,
+    //  and use the factories to get matrices filled with "pre-made" data.
+    //  This way users need to be explicite about what is in the matrix they are making
+    //  (Matrix a = Matrix::zero(1,5) is more explicit than Matrix a(1,5)
+    Matrix(int rows, int cols);
+
     int rows_ = 0;
     int cols_ = 0;
     std::vector<float> data_;

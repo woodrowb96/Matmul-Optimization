@@ -10,17 +10,6 @@
 /******************************** PUBLIC ***********************************/
 
 //CONSTRUCTOR
-Matrix::Matrix(int rows, int cols)
-{
-  if(rows <= 0 || cols <= 0) {
-    throw std::invalid_argument("Matrix(): invalid matrix size");
-  }
-
-  rows_ = rows;
-  cols_ = cols;
-  data_.resize(rows * cols);
-}
-
 Matrix::Matrix(std::initializer_list<std::initializer_list<float>> rows)
 {
   if(rows.size() == 0) {
@@ -67,6 +56,11 @@ Matrix Matrix::identity(int n)
   return identity;
 }
 
+Matrix Matrix::zeros(int rows, int cols)
+{
+  return Matrix(rows, cols); //the private constructor returns a rowsXcols matrix filled with zeros
+}
+
 //PUBLIC METHODS
 void Matrix::print() const
 {
@@ -82,3 +76,18 @@ void Matrix::zero()
 {
   std::fill(data_.begin(), data_.end(), 0.0f);
 }
+
+/********************************** PRIVATE **************************************/
+
+//PRIVATE CONSTRUCTOR
+Matrix::Matrix(int rows, int cols)
+{
+  if(rows <= 0 || cols <= 0) {
+    throw std::invalid_argument("Matrix(): invalid matrix size");
+  }
+
+  rows_ = rows;
+  cols_ = cols;
+  data_.resize(rows * cols);
+}
+
