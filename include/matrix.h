@@ -4,6 +4,7 @@
 #include <vector>
 #include <initializer_list>
 #include <random>
+#include <cassert>
 
 class Matrix
 {
@@ -16,8 +17,14 @@ class Matrix
     static Matrix random(int rows, int cols, unsigned int seed = std::random_device{}());
 
     //operator overloads
-    float& operator()(int i, int j) { return data_[(i * cols_) + j]; };
-    float  operator()(int i, int j) const { return data_[(i * cols_) + j]; };
+    float& operator()(int i, int j) {
+      assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
+      return data_[(i * cols_) + j];
+    };
+    float  operator()(int i, int j) const {
+      assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
+      return data_[(i * cols_) + j];
+    };
 
     //getters
     int rows() const { return rows_; };

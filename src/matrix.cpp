@@ -3,7 +3,6 @@
 #include <vector>
 #include <cstdio>
 #include <random>
-#include <cassert>
 #include <utility>
 #include <initializer_list>
 #include <stdexcept>
@@ -54,21 +53,6 @@ Matrix Matrix::random(int rows, int cols, unsigned int seed)
   }
   return rand_matrix;
 }
-
-
-//OPERATOR OVERLOADS
-// float& Matrix::operator()(int i, int j)
-// {
-//   assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
-//   return data_[(i * cols_) + j];
-// }
-//
-// float Matrix::operator()(int i, int j) const
-// {
-//   assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
-//   return data_[(i * cols_) + j];
-// }
-
 
 //PUBLIC METHODS
 void Matrix::print() const
