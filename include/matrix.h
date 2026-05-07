@@ -2,6 +2,7 @@
 #define MATRIX_H
 
 #include <vector>
+#include <initializer_list>
 #include <random>
 
 class Matrix
@@ -9,7 +10,7 @@ class Matrix
   public:
     //constructor
     Matrix(int rows, int cols);
-    Matrix(int rows, int cols, std::vector<float> data);
+    Matrix(std::initializer_list<std::initializer_list<float>> rows);
 
     //factory methods
     static Matrix random(int rows, int cols, unsigned int seed = std::random_device{}());

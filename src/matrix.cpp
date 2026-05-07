@@ -5,6 +5,8 @@
 #include <random>
 #include <cassert>
 #include <utility>
+#include <initializer_list>
+#include <stdexcept>
 
 /******************************** PUBLIC ***********************************/
 
@@ -16,13 +18,27 @@ Matrix::Matrix(int rows, int cols)
     data_(rows * cols)
 {}
 
-Matrix::Matrix(int rows, int cols, std::vector<float> data)
-  :
-    rows_(rows),
-    cols_(cols),
-    data_(std::move(data))
+Matrix::Matrix(std::initializer_list<std::initializer_list<float>> rows)
 {
-  assert(static_cast<size_t>(rows * cols) == data_.size());
+  if(rows.size() == 0) {
+    throw std::invalid_argument("Matrix: empty initializer list");
+  }
+  if(rows.begin()->size() == 0) {
+    throw std::invalid_argument("Matrix: empty row");
+  }
+
+  rows_ = static_cast<int>(rows.size());
+  cols_ = static_cast<int>(rows.begin()->size());
+  data_.reserve(rows_ * cols_);
+
+  for(const auto& row : rows) {
+    if(static_cast<int>(row.size()) != cols_) {
+      throw std::invalid_argument("Matrix: row length mismatch");
+    }
+    for(float f : row) {
+      data_.push_back(f);
+    }
+  }
 }
 
 
