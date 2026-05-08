@@ -2,6 +2,7 @@
 #include "matmul_naive.h"
 #include "matmul_tiled_cpu.h"
 #include "matmul_tiled_threaded.h"
+#include "matmul_tiled_gpu.h"
 #include "benchmark.h"
 
 #include <iostream>
@@ -50,30 +51,31 @@ void run_benchmark(const Matrix& left, const Matrix& right,
 
 int main()
 {
-  int num_threads = std::thread::hardware_concurrency();
-  if(num_threads == 0) {
-    std::cout << "std::thread::hardware_concurency() returning 0, falling back to 4 threads\n";
-    num_threads = 4;
-  }
-  else {
-    std::cout << "Using " << std::to_string(num_threads) << " threads\n";
-  }
-
-  run_benchmark(Matrix::random(5,5,42), Matrix::random(5,7,100),
-                /*tile_size =*/ 32, 32, 32,
-                num_threads);
-
-  run_benchmark(Matrix::random(100,500,47), Matrix::random(500, 100, 91),
-                /*tile_size =*/ 32, 32, 32,
-                num_threads);
-
-  run_benchmark(Matrix::random(1000,1025,56), Matrix::random(1025, 900, 77),
-                /*tile_size =*/ 32, 32, 32,
-                num_threads);
-
-  run_benchmark(Matrix::random(2048,1587,66), Matrix::random(1587, 1024, 111),
-                /*tile_size =*/ 32, 32, 32,
-                num_threads);
-
+  hello_world_gpu();
+  // int num_threads = std::thread::hardware_concurrency();
+  // if(num_threads == 0) {
+  //   std::cout << "std::thread::hardware_concurency() returning 0, falling back to 4 threads\n";
+  //   num_threads = 4;
+  // }
+  // else {
+  //   std::cout << "Using " << std::to_string(num_threads) << " threads\n";
+  // }
+  //
+  // run_benchmark(Matrix::random(5,5,42), Matrix::random(5,7,100),
+  //               /*tile_size =*/ 32, 32, 32,
+  //               num_threads);
+  //
+  // run_benchmark(Matrix::random(100,500,47), Matrix::random(500, 100, 91),
+  //               /*tile_size =*/ 32, 32, 32,
+  //               num_threads);
+  //
+  // run_benchmark(Matrix::random(1000,1025,56), Matrix::random(1025, 900, 77),
+  //               /*tile_size =*/ 32, 32, 32,
+  //               num_threads);
+  //
+  // run_benchmark(Matrix::random(2048,1587,66), Matrix::random(1587, 1024, 111),
+  //               /*tile_size =*/ 32, 32, 32,
+  //               num_threads);
+  //
   return 0;
 }

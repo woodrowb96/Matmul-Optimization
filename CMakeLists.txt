@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.18)
 project(matmul_optimization
         VERSION 0.1
         DESCRIPTION "Matrix multiplication optimization"
-        LANGUAGES CXX)
+        LANGUAGES CXX CUDA)
 
 enable_testing()
 
@@ -11,6 +11,10 @@ find_package(Threads REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+set(CMAKE_CUDA_ARCHITECTURES 75)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
@@ -22,9 +26,11 @@ add_executable(matmul
   src/matmul_naive.cpp
   src/benchmark.cpp
   src/matmul_tiled_cpu.cpp
-  src/matmul_tiled_threaded.cpp)
+  src/matmul_tiled_threaded.cpp
+  src/matmul_tiled_gpu.cu)
 target_include_directories(matmul PRIVATE include)
-target_compile_options(matmul PRIVATE -march=native -Wall -Wextra)
+target_compile_options(matmul PRIVATE
+  $<$<COMPILE_LANGUAGE:CXX>:-march=native -Wall -Wextra>)
 target_link_libraries(matmul PRIVATE Threads::Threads)
 
 add_executable(test_naive
