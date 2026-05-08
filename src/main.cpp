@@ -55,36 +55,25 @@ int main()
     std::cout << "std::thread::hardware_concurency() returning 0, falling back to 4 threads\n";
     num_threads = 4;
   }
+  else {
+    std::cout << "Using " << std::to_string(num_threads) << " threads\n";
+  }
+
   run_benchmark(Matrix::random(5,5,42), Matrix::random(5,7,100),
                 /*tile_size =*/ 32, 32, 32,
                 num_threads);
 
-  // Matrix d = Matrix::random(100, 500, 47);
-  // Matrix e = Matrix::random(500, 100, 91);
-  // Matrix f (100, 100);
-  // stats = time_matmul(matmul_naive, d, e, f, 5);
-  // print_times("(100x500) X (500x100) (naive)", stats);
-  // f.zero();
-  // stats = time_matmul(tiled_call, d, e, f, 5);
-  // print_times("(100x500) X (500x100) (tiled_cpu)", stats);
-  //
-  // Matrix g = Matrix::random(1000, 1025, 47);
-  // Matrix h = Matrix::random(1025, 900, 91);
-  // Matrix i (1000, 900);
-  // stats = time_matmul(matmul_naive, g, h, i, 5);
-  // print_times("(1000x1025) X (1025x900) (naive)", stats);
-  // i.zero();
-  // stats = time_matmul(tiled_call, g, h, i, 5);
-  // print_times("(1000x1025) X (1025x900) (tiled_cpu)", stats);
-  //
-  // Matrix j = Matrix::random(2048, 1587, 49);
-  // Matrix k = Matrix::random(1587, 1024, 10000);
-  // Matrix l (2048, 1024);
-  // stats = time_matmul(matmul_naive, j, k, l, 5);
-  // print_times("(2048x1587) X (1587x1024) (naive)", stats);
-  // l.zero();
-  // stats = time_matmul(tiled_call, j, k, l, 5);
-  // print_times("(2048x1587) X (1587x1024) (tiled_cpu)", stats);
+  run_benchmark(Matrix::random(100,500,47), Matrix::random(500, 100, 91),
+                /*tile_size =*/ 32, 32, 32,
+                num_threads);
+
+  run_benchmark(Matrix::random(1000,1025,56), Matrix::random(1025, 900, 77),
+                /*tile_size =*/ 32, 32, 32,
+                num_threads);
+
+  run_benchmark(Matrix::random(2048,1587,66), Matrix::random(1587, 1024, 111),
+                /*tile_size =*/ 32, 32, 32,
+                num_threads);
 
   return 0;
 }
