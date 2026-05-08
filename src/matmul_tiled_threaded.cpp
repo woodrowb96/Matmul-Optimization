@@ -9,41 +9,33 @@ void matmul_tiled_threaded(const Matrix& A, const Matrix& B, Matrix& C,
                       int tile_i, int tile_j, int tile_k,
                       int num_threads)
 {
-  std::atomic<int> next_tile_i {0};
+  std::atomic<int> next_tile_row {0};
 
   std::vector<std::thread> threads;
-  for(int i = 0; i < num_threads; i++) {
+  for(int t = 0; t < num_threads; t++) {
     threads.emplace_back([&]() {
-      while(true) {
-        int current_tile_i = next_tile_i.fetch_add(tile_i);
-        if(current_tile_i >= A.rows()) break;
-        compute_tile_row(A, B, C, tile_i, tile_j, tile_k, current_tile_i);
+      int tile_row = next_tile_row.fetch_add(tile_i);
+      while(tile_row < A.rows()) {
+        for(int tile_col = 0; tile_col < B.cols(); tile_col += tile_j) {
+          for(int tile_depth = 0; tile_depth < A.cols(); tile_depth += tile_k) {
+
+            //compute the partial dot_products for the tile
+            for(int i = tile_row; i < std::min(tile_row + tile_i, A.rows()); i++) {
+              for(int j = tile_col; j < std::min(tile_col + tile_j, B.cols()); j++) {
+                float dot_prod = C(i,j);
+                for(int k = tile_depth; k < std::min(tile_depth + tile_k, A.cols()); k++) {
+                  dot_prod += A(i,k) * B(k,j);
+                }
+                C(i,j) = dot_prod;
+              }
+            }
+          }
+        }
+        tile_row = next_tile_row.fetch_add(tile_i);
       }
     });
   }
 
-  for(std::thread& t : threads) {
-    t.join();
-  }
+  for(std::thread& t : threads) t.join();
 }
 
-void compute_tile_row(const Matrix& A, const Matrix& B, Matrix& C,
-                      int tile_i, int tile_j, int tile_k,   //each tile is iXjxK
-                      int current_tile_i)
-{
-  for(int jj = 0; jj < B.cols(); jj += tile_j) {
-    for(int kk = 0; kk < A.cols(); kk += tile_k) {
-
-      for(int i = current_tile_i; i < std::min(current_tile_i + tile_i, A.rows()); i++) {
-        for(int j = jj; j < std::min(jj + tile_j, B.cols()); j++) {
-          float dot_prod = C(i,j);
-          for(int k = kk; k < std::min(kk + tile_k, A.cols()); k++) {
-            dot_prod += A(i,k) * B(k,j);
-          }
-          C(i,j) = dot_prod;
-        }
-      }
-
-    }
-  }
-}

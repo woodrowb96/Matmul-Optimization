@@ -9,9 +9,4 @@
 void matmul_tiled_threaded(const Matrix& A, const Matrix& B, Matrix& C,
                     int tile_i, int tile_j, int tile_k,
                     int num_threads);
-
-void compute_tile_row(const Matrix& A, const Matrix& B, Matrix& C,
-                      int tile_i, int tile_j, int tile_k,
-                      int current_tile_i);
-
 #endif

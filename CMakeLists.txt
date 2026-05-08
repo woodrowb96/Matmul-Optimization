@@ -57,5 +57,5 @@ target_include_directories(test_tiled_threaded PRIVATE
   include
   tests)
 target_compile_options(test_tiled_threaded PRIVATE -march=native -Wall -Wextra)
-target_link_libraries(matmul PRIVATE Threads::Threads)
+target_link_libraries(test_tiled_threaded PRIVATE Threads::Threads)
 add_test(NAME test_tiled_threaded COMMAND test_tiled_threaded)
