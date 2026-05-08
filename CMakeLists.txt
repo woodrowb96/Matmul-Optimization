@@ -31,8 +31,19 @@ add_executable(test_naive
   tests/test_naive.cpp
   src/matrix.cpp
   src/matmul_naive.cpp)
-target_include_directories(test_naive PRIVATE 
+target_include_directories(test_naive PRIVATE
   include
   tests)
 target_compile_options(test_naive PRIVATE -march=native -Wall -Wextra)
 add_test(NAME test_naive COMMAND test_naive)
+
+add_executable(test_tiled_cpu
+  tests/test_tiled_cpu.cpp
+  src/matrix.cpp
+  src/matmul_naive.cpp
+  src/matmul_tiled_cpu.cpp)
+target_include_directories(test_tiled_cpu PRIVATE
+  include
+  tests)
+target_compile_options(test_tiled_cpu PRIVATE -march=native -Wall -Wextra)
+add_test(NAME test_tiled_cpu COMMAND test_tiled_cpu)
