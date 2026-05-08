@@ -85,7 +85,6 @@ Matrix::Matrix(int rows, int cols)
   if(rows <= 0 || cols <= 0) {
     throw std::invalid_argument("Matrix(): invalid matrix size");
   }
-
   rows_ = rows;
   cols_ = cols;
   data_.resize(rows * cols);

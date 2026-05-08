@@ -47,3 +47,15 @@ target_include_directories(test_tiled_cpu PRIVATE
   tests)
 target_compile_options(test_tiled_cpu PRIVATE -march=native -Wall -Wextra)
 add_test(NAME test_tiled_cpu COMMAND test_tiled_cpu)
+
+add_executable(test_tiled_threaded
+  tests/test_tiled_threaded.cpp
+  src/matrix.cpp
+  src/matmul_naive.cpp
+  src/matmul_tiled_threaded.cpp)
+target_include_directories(test_tiled_threaded PRIVATE
+  include
+  tests)
+target_compile_options(test_tiled_threaded PRIVATE -march=native -Wall -Wextra)
+target_link_libraries(matmul PRIVATE Threads::Threads)
+add_test(NAME test_tiled_threaded COMMAND test_tiled_threaded)
