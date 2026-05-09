@@ -27,11 +27,10 @@ inline bool matrices_approx_equal (const Matrix& a, const Matrix& b, float tol =
   return true;
 }
 
-using MatmulFn = std::function<void(const Matrix&, const Matrix&, Matrix&, int, int, int)>;
+using MatmulFn = std::function<void(const Matrix&, const Matrix&, Matrix&)>;
 
 inline bool run_test(MatmulFn matmul,
                     const Matrix& left, const Matrix& right,
-                    int tile_i, int tile_j, int tile_k,
                     const std::string& label)
 {
   //Use matmul naive to calculate the expected result
@@ -40,12 +39,11 @@ inline bool run_test(MatmulFn matmul,
 
   //Use the matmul we are testing to calc the actual result
   Matrix actual   = Matrix::zeros(left.rows(), right.cols());
-  matmul(left, right, actual, tile_i, tile_j, tile_k);
+  matmul(left, right, actual);
 
   //Handle Test pass/fail
   if(!matrices_approx_equal(actual, expected)) {
     std::cerr << "Test Fail " << label        << ": ";
-    std::cerr << "tile: "     << tile_i       << "x" << tile_j       << "x" << tile_k << " ";
     std::cerr << "left: "     << left.rows()  << "x" << left.cols()  << " ";
     std::cerr << "right: "    << right.rows() << "x" << right.cols() << "\n";
     return false;
@@ -57,7 +55,6 @@ inline int run_random_tests(MatmulFn matmul,
                             std::mt19937& gen,
                             std::uniform_int_distribution<int> size_dist,
                             int num_runs,
-                            int tile_i, int tile_j, int tile_k,
                             const std::string& label)
 {
   int num_fails {0};
@@ -81,7 +78,6 @@ inline int run_random_tests(MatmulFn matmul,
     bool test_passed = run_test(matmul,
                                 Matrix::random(left_rows,  left_cols,  left_seed),
                                 Matrix::random(right_rows, right_cols, right_seed),
-                                tile_i, tile_j, tile_k,
                                 run_label);
 
     if(!test_passed) num_fails++;
