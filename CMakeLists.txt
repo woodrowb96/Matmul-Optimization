@@ -27,7 +27,8 @@ add_executable(matmul
   src/benchmark.cpp
   src/matmul_tiled_cpu.cpp
   src/matmul_tiled_threaded.cpp
-  src/matmul_tiled_gpu.cu)
+  src/matmul_tiled_gpu.cu
+  src/matmul_naive_gpu.cu)
 target_include_directories(matmul PRIVATE include)
 target_compile_options(matmul PRIVATE
   $<$<COMPILE_LANGUAGE:CXX>:-march=native -Wall -Wextra>)
@@ -65,3 +66,15 @@ target_include_directories(test_tiled_threaded PRIVATE
 target_compile_options(test_tiled_threaded PRIVATE -march=native -Wall -Wextra)
 target_link_libraries(test_tiled_threaded PRIVATE Threads::Threads)
 add_test(NAME test_tiled_threaded COMMAND test_tiled_threaded)
+
+add_executable(test_naive_gpu
+  tests/test_naive_gpu.cpp
+  src/matrix.cpp
+  src/matmul_naive.cpp
+  src/matmul_naive_gpu.cu)
+target_include_directories(test_naive_gpu PRIVATE
+  include
+  tests)
+target_compile_options(test_naive_gpu PRIVATE
+  $<$<COMPILE_LANGUAGE:CXX>:-march=native -Wall -Wextra>)
+add_test(NAME test_naive_gpu COMMAND test_naive_gpu)
