@@ -20,12 +20,14 @@ class Matrix
     //operator overloads
     float& operator()(int i, int j) {
       assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
-      return data_[(i * cols_) + j];
+      return buf_[(i * cols_) + j];
     };
     float  operator()(int i, int j) const {
       assert(i >= 0 && i < rows_ && j >= 0 && j < cols_);
-      return data_[(i * cols_) + j];
+      return buf_[(i * cols_) + j];
     };
+    float* data()             {return buf_.data(); };
+    const float* data() const {return buf_.data(); };
 
     //getters
     int rows() const { return rows_; };
@@ -47,7 +49,7 @@ class Matrix
 
     int rows_ = 0;
     int cols_ = 0;
-    std::vector<float> data_;
+    std::vector<float> buf_;
 };
 
 #endif

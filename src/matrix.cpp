@@ -21,14 +21,14 @@ Matrix::Matrix(std::initializer_list<std::initializer_list<float>> rows)
 
   rows_ = static_cast<int>(rows.size());
   cols_ = static_cast<int>(rows.begin()->size());
-  data_.reserve(rows_ * cols_);
+  buf_.reserve(rows_ * cols_);
 
   for(const auto& row : rows) {
     if(static_cast<int>(row.size()) != cols_) {
       throw std::invalid_argument("Matrix: row length mismatch");
     }
     for(float f : row) {
-      data_.push_back(f);
+      buf_.push_back(f);
     }
   }
 }
@@ -42,7 +42,7 @@ Matrix Matrix::random(int rows, int cols, unsigned int seed)
 
   Matrix rand_matrix(rows, cols);
   for(int i = 0; i < (rows * cols); i++) {
-      rand_matrix.data_[i] = dist(gen);
+      rand_matrix.buf_[i] = dist(gen);
   }
   return rand_matrix;
 }
@@ -66,7 +66,7 @@ void Matrix::print() const
 {
   for(int i = 0; i < rows_; i++) {
     for(int j = 0; j < cols_; j++) {
-      std::fprintf(stdout, "%8.3f ", data_[(i * cols_) + j]);
+      std::fprintf(stdout, "%8.3f ", buf_[(i * cols_) + j]);
     }
     std::fprintf(stdout, "\n");
   }
@@ -74,7 +74,7 @@ void Matrix::print() const
 
 void Matrix::zero()
 {
-  std::fill(data_.begin(), data_.end(), 0.0f);
+  std::fill(buf_.begin(), buf_.end(), 0.0f);
 }
 
 /********************************** PRIVATE **************************************/
@@ -87,6 +87,6 @@ Matrix::Matrix(int rows, int cols)
   }
   rows_ = rows;
   cols_ = cols;
-  data_.resize(rows * cols);
+  buf_.resize(rows * cols);
 }
 
