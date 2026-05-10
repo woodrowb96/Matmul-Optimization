@@ -78,3 +78,15 @@ target_include_directories(test_naive_gpu PRIVATE
 target_compile_options(test_naive_gpu PRIVATE
   $<$<COMPILE_LANGUAGE:CXX>:-march=native -Wall -Wextra>)
 add_test(NAME test_naive_gpu COMMAND test_naive_gpu)
+
+add_executable(test_tiled_gpu
+  tests/test_tiled_gpu.cpp
+  src/matrix.cpp
+  src/matmul_naive.cpp
+  src/matmul_tiled_gpu.cu)
+target_include_directories(test_tiled_gpu PRIVATE
+  include
+  tests)
+target_compile_options(test_tiled_gpu PRIVATE
+  $<$<COMPILE_LANGUAGE:CXX>:-march=native -Wall -Wextra>)
+add_test(NAME test_tiled_gpu COMMAND test_tiled_gpu)
