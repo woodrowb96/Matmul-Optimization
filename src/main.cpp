@@ -59,17 +59,17 @@ void run_benchmark(const Matrix& left, const Matrix& right,
 
   //benchmark naive
   TimingStats stats = time_matmul(matmul_naive, left, right, result, 5);
-  print_times("Type: naive", stats);
+  print_times("Type: naive_cpu", stats);
 
   //benchmark tiled_cpu
   result.zero();
   stats = time_matmul(make_tiled_cpu_fn(tile_i, tile_j, tile_k), left, right, result, 5);
-  print_times("Type: tiled_cpu", stats);
+  print_times("Type: tiled_cpu_single_threaded", stats);
 
   //benchmark matmul_tiled_threaded
   result.zero();
   stats = time_matmul(make_tiled_threaded_fn(tile_i, tile_j, tile_k, num_threads), left, right, result, 5);
-  print_times("Type: tiled_threaded", stats);
+  print_times("Type: tiled_cpu_multi_threaded", stats);
 
   //benchmark matmul_naive_gpu
   result.zero();
@@ -79,12 +79,12 @@ void run_benchmark(const Matrix& left, const Matrix& right,
   //benchmark matmul_tiled_gpu
   result.zero();
   stats = time_matmul(make_tiled_gpu_fn(), left, right, result, 5);
-  print_times("Type: tiled_gpu", stats);
+  print_times("Type: tiled_gpu_shared_mem", stats);
 
   //benchmark matmul_tiled_reg_gpu
   result.zero();
   stats = time_matmul(make_tiled_reg_gpu_fn(), left, right, result, 5);
-  print_times("Type: tiled_reg_gpu", stats);
+  print_times("Type: tiled_gpu_register", stats);
 }
 
 int main()
