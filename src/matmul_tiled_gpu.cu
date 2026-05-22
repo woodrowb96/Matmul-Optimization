@@ -3,7 +3,6 @@
 
 #include <cassert>
 
-//Hardcode the tile size for now, Ill add templates later to get tunable tile sizes
 constexpr int TILE_I = 16; //num rows in tile
 constexpr int TILE_J = 16; //num cols in tile
 constexpr int TILE_K = 16; //num cols in tile
@@ -64,10 +63,10 @@ void matmul_tiled_gpu(const Matrix& l, const Matrix& r, Matrix& res)
   cudaMemcpy(d_l, l.data(), l_bytes, cudaMemcpyHostToDevice);
   cudaMemcpy(d_r, r.data(), r_bytes, cudaMemcpyHostToDevice);
 
-  //TO DO
-dim3 block_dim(TILE_J, TILE_I);
-dim3 grid_dim((n + TILE_J - 1) / TILE_J,
-              (m + TILE_I - 1) / TILE_I);
+  //Split up work for the GPU
+  dim3 block_dim(TILE_J, TILE_I);
+  dim3 grid_dim((n + TILE_J - 1) / TILE_J,
+                (m + TILE_I - 1) / TILE_I);
   matmul_tiled_gpu_kernal<<<grid_dim, block_dim>>>(d_l, d_r, d_res, m, k, n);
   cudaDeviceSynchronize();
 

@@ -28,6 +28,7 @@ add_executable(matmul
   src/matmul_tiled_cpu.cpp
   src/matmul_tiled_threaded.cpp
   src/matmul_tiled_gpu.cu
+  src/matmul_tiled_reg_gpu.cu
   src/matmul_naive_gpu.cu)
 target_include_directories(matmul PRIVATE include)
 target_compile_options(matmul PRIVATE
@@ -90,3 +91,15 @@ target_include_directories(test_tiled_gpu PRIVATE
 target_compile_options(test_tiled_gpu PRIVATE
   $<$<COMPILE_LANGUAGE:CXX>:-march=native -Wall -Wextra>)
 add_test(NAME test_tiled_gpu COMMAND test_tiled_gpu)
+
+add_executable(test_tiled_reg_gpu
+  tests/test_tiled_reg_gpu.cpp
+  src/matrix.cpp
+  src/matmul_naive.cpp
+  src/matmul_tiled_reg_gpu.cu)
+target_include_directories(test_tiled_reg_gpu PRIVATE
+  include
+  tests)
+target_compile_options(test_tiled_reg_gpu PRIVATE
+  $<$<COMPILE_LANGUAGE:CXX>:-march=native -Wall -Wextra>)
+add_test(NAME test_tiled_reg_gpu COMMAND test_tiled_reg_gpu)

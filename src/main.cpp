@@ -4,6 +4,7 @@
 #include "matmul_tiled_threaded.h"
 #include "matmul_naive_gpu.h"
 #include "matmul_tiled_gpu.h"
+#include "matmul_tiled_reg_gpu.h"
 #include "benchmark.h"
 
 #include <iostream>
@@ -35,6 +36,13 @@ auto make_tiled_gpu_fn()
 {
   return [](const Matrix& left, const Matrix& right, Matrix& result) {
     matmul_tiled_gpu(left, right, result);
+  };
+}
+
+auto make_tiled_reg_gpu_fn()
+{
+  return [](const Matrix& left, const Matrix& right, Matrix& result) {
+    matmul_tiled_reg_gpu(left, right, result);
   };
 }
 
@@ -72,6 +80,11 @@ void run_benchmark(const Matrix& left, const Matrix& right,
   result.zero();
   stats = time_matmul(make_tiled_gpu_fn(), left, right, result, 5);
   print_times("Type: tiled_gpu", stats);
+
+  //benchmark matmul_tiled_reg_gpu
+  result.zero();
+  stats = time_matmul(make_tiled_reg_gpu_fn(), left, right, result, 5);
+  print_times("Type: tiled_reg_gpu", stats);
 }
 
 int main()
