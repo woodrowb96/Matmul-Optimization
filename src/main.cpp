@@ -54,8 +54,8 @@ void run_benchmark(const Matrix& left, const Matrix& right,
 
   std::fprintf(stdout,
       "------------------------------------------------------------------------\n"
-      "(%dx%d) X (%dx%d)\n",
-      left.rows(), left.cols(), right.rows(), right.cols());
+      "Matrix Sizes: (%dx%d) X (%dx%d) = (%dx%d)\n",
+      left.rows(), left.cols(), right.rows(), right.cols(), left.rows(), right.cols());
 
   //benchmark naive
   TimingStats stats = time_matmul(matmul_naive, left, right, result, 5);
